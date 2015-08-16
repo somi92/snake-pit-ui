@@ -5,7 +5,8 @@
  */
 package com.github.somi92.snakepitui.menu;
 
-import com.github.somi92.snakepitui.manual.ManualDialog;
+import com.github.somi92.snakepitui.dialogs.LoadRunDialog;
+import com.github.somi92.snakepitui.dialogs.ManualDialog;
 
 /**
  *
@@ -41,6 +42,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Snake pit");
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -67,8 +69,13 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         jbtnAuto.setFont(new java.awt.Font("DejaVu Sans", 3, 18)); // NOI18N
-        jbtnAuto.setText("Load and run snake");
+        jbtnAuto.setText("Load and run snake AI");
         jbtnAuto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAutoActionPerformed(evt);
+            }
+        });
 
         jbtnRunGP.setFont(new java.awt.Font("DejaVu Sans", 3, 18)); // NOI18N
         jbtnRunGP.setText("Breed snakes");
@@ -156,6 +163,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void jbtnManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnManualActionPerformed
         new ManualDialog(this, true).setVisible(true);
     }//GEN-LAST:event_jbtnManualActionPerformed
+
+    private void jbtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAutoActionPerformed
+        new LoadRunDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_jbtnAutoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
