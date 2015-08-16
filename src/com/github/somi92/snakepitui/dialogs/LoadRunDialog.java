@@ -39,7 +39,7 @@ public class LoadRunDialog extends javax.swing.JDialog {
         jbtnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Load and run snake");
+        setTitle("Load and run snake AI");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
