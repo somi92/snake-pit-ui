@@ -35,8 +35,15 @@ public class SnakePitThread extends Thread {
             snakePit.onRunFinished("GP finished at "+(new Date()).toString()+'\n');
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Snake pit gp stopped.");
-            snakePit.onRunStopped("GP stopped at "+(new Date()).toString()+'\n');
+            if(e instanceof InterruptedException) {
+                System.out.println("Snake pit gp stopped.");
+                snakePit.onRunStopped("GP stopped at "+(new Date()).toString()+'\n');
+            } else {
+                System.out.println("Snake pit gp error: "+e.getMessage());
+                snakePit.onResult("GP error at "+(new Date()).toString()+'\n');
+                snakePit.onResult("Error message: "+e.getMessage()+'\n');
+                snakePit.onRunStopped("GP stopped at "+(new Date()).toString()+'\n');
+            }
         }
     }
 }

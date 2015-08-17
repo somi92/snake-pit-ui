@@ -9,7 +9,9 @@ import com.github.somi92.snakepitui.interfaces.SnakePitReport;
 import com.github.somi92.snakepitui.interop.SnakePitObject;
 import com.github.somi92.snakepitui.interop.threads.SnakePitThread;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
@@ -62,7 +64,6 @@ public class BreedDialog extends javax.swing.JDialog {
         jlblMessage = new javax.swing.JLabel();
         jbtnRun = new javax.swing.JButton();
         jbtnStop = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jrbtnInitial = new javax.swing.JRadioButton();
         jrbtnFull = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
@@ -173,8 +174,6 @@ public class BreedDialog extends javax.swing.JDialog {
             }
         });
 
-        jButton4.setText("jButton2");
-
         jrbtnInitial.setText("Initial function set");
         jrbtnInitial.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
@@ -190,7 +189,7 @@ public class BreedDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jrbtnInitial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -215,10 +214,7 @@ public class BreedDialog extends javax.swing.JDialog {
                                     .addComponent(jtxtDepth)
                                     .addComponent(jtxtMutations)
                                     .addComponent(jtxtIterations)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrbtnFull, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jrbtnInitial)))
+                            .addComponent(jrbtnFull, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -259,16 +255,18 @@ public class BreedDialog extends javax.swing.JDialog {
                             .addComponent(jtxtMutations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrbtnFull)
-                    .addComponent(jrbtnInitial))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(jrbtnFull)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtnRun)
-                        .addComponent(jbtnStop))
-                    .addComponent(jButton4))
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnRun)
+                            .addComponent(jbtnStop))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrbtnInitial)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "Results"));
@@ -344,34 +342,46 @@ public class BreedDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jtxtMutationsActionPerformed
 
     private void jbtnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRunActionPerformed
-        int itr = Integer.parseInt(jtxtIterations.getText().trim());
-        int mig = Integer.parseInt(jtxtMigrations.getText().trim());
-        int isl = Integer.parseInt(jtxtIslands.getText().trim());
-        int tou = Integer.parseInt(jtxtTournament.getText().trim());
-        int pop = Integer.parseInt(jtxtPopulation.getText().trim());
-        int dep = Integer.parseInt(jtxtDepth.getText().trim());
-        double mut = Double.parseDouble(jtxtMutations.getText().trim());
-        
-        String functions = "";
-        if(jrbtnFull.isSelected()) {
-            functions = "full";
-        } else if(jrbtnInitial.isSelected()) {
-            functions = "init";
+        try {
+            int itr = Integer.parseInt(jtxtIterations.getText().trim());
+            int mig = Integer.parseInt(jtxtMigrations.getText().trim());
+            int isl = Integer.parseInt(jtxtIslands.getText().trim());
+            int tou = Integer.parseInt(jtxtTournament.getText().trim());
+            int pop = Integer.parseInt(jtxtPopulation.getText().trim());
+            int dep = Integer.parseInt(jtxtDepth.getText().trim());
+            double mut = Double.parseDouble(jtxtMutations.getText().trim());
+           
+            String functions = "";
+            if(jrbtnFull.isSelected()) {
+                functions = "full";
+            } else if(jrbtnInitial.isSelected()) {
+                functions = "init";
+            }
+            
+            boolean validation = validateParams(itr, mig, isl, tou, pop, dep, mut);
+            if(!validation) {
+                return;
+            }
+
+            SnakePitObject spo = new SnakePitObject();
+            spo.setIterations(itr);
+            spo.setMigrations(mig);
+            spo.setNum_islands(isl);
+            spo.setTournament_size(tou);
+            spo.setPopulation_size(pop);
+            spo.setMax_depth(dep);
+            spo.setMutation_probability(mut);
+            spo.setFunctions(functions);
+            spo.setParent(this);
+
+            spt = new SnakePitThread(spo);
+            spt.start();
+        } catch(NumberFormatException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "All parameters must be entered as numerical values.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
-        SnakePitObject spo = new SnakePitObject();
-        spo.setIterations(itr);
-        spo.setMigrations(mig);
-        spo.setNum_islands(isl);
-        spo.setTournament_size(tou);
-        spo.setPopulation_size(pop);
-        spo.setMax_depth(dep);
-        spo.setMutation_probability(mut);
-        spo.setFunctions(functions);
-        spo.setParent(this);
-        
-        spt = new SnakePitThread(spo);
-        spt.start();
     }//GEN-LAST:event_jbtnRunActionPerformed
 
     private void jbtnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStopActionPerformed
@@ -388,7 +398,6 @@ public class BreedDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -442,5 +451,21 @@ public class BreedDialog extends javax.swing.JDialog {
         jlblMessage.setText("GP is finished.");
         jbtnRun.setEnabled(true);
         jbtnStop.setEnabled(false);
+    }
+    
+    public boolean validateParams(int itr, int mig, int isl, int tou, int pop, int dep, double mut) {
+        if(itr < 0 || mig < 0 || isl < 0 || tou < 0 || pop < 0 || dep < 0 || mut < 0) {
+            JOptionPane.showMessageDialog(this, "All parameter values must be zero or positive!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if(pop < 1 || pop > 3500) {
+            JOptionPane.showMessageDialog(this, "Population size must be between 1 and 3500!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if(mut < 0 || mut > 1) {
+            JOptionPane.showMessageDialog(this, "Mutation probability must be between 0 and 1.0!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 }
