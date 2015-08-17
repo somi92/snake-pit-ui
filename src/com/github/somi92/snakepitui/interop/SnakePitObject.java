@@ -5,15 +5,16 @@
  */
 package com.github.somi92.snakepitui.interop;
 
-import javax.swing.JTextArea;
+import com.github.somi92.snakepitui.dialogs.BreedDialog;
+import com.github.somi92.snakepitui.interfaces.SnakePitReport;
 
 /**
  *
  * @author milos
  */
-public class SnakePitObject {
+public class SnakePitObject implements SnakePitReport {
    
-    private JTextArea txtArea;
+    private BreedDialog parent;
     
     private int iterations;
     private int migrations;
@@ -27,8 +28,8 @@ public class SnakePitObject {
     public SnakePitObject() {
     }
 
-    public void setTxtArea(JTextArea txtArea) {
-        this.txtArea = txtArea;
+    public void setParent(BreedDialog txtArea) {
+        this.parent = txtArea;
     }
     
     public int getIterations() {
@@ -96,7 +97,34 @@ public class SnakePitObject {
     }
     
     public void report(String res) {
-        txtArea.append("========================================="+'\n'+'\n');
-        txtArea.append(res+'\n');
+        
     }
+
+    @Override
+    public void onRunStarted(String message) {
+        parent.appendResults(message+'\n');
+        parent.gpStarted();
+    }
+
+    @Override
+    public void onResult(String message) {
+        parent.appendResults("========================================="+'\n'+'\n');
+        parent.appendResults(message+'\n');
+    }
+
+    @Override
+    public void onRunFinished(String message) {
+        parent.appendResults("========================================="+'\n'+'\n');
+        parent.appendResults(message+'\n');
+        parent.gpFinished();
+    }
+
+    @Override
+    public void onRunStopped(String message) {
+        parent.appendResults("========================================="+'\n'+'\n');
+        parent.appendResults(message+'\n');
+        parent.gpStopped();
+    }
+
+    
 }

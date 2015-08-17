@@ -5,6 +5,7 @@
  */
 package com.github.somi92.snakepitui.interop.threads;
 
+import com.github.somi92.snakepitui.interfaces.SnakePitReport;
 import com.github.somi92.snakepitui.interop.SnakePitObject;
 import java.util.Date;
 import snake_pit.core;
@@ -15,7 +16,7 @@ import snake_pit.core;
  */
 public class SnakePitThread extends Thread {
 
-    private SnakePitObject snakePit;
+    private SnakePitReport snakePit;
     
     public SnakePitThread() {
     }
@@ -27,8 +28,15 @@ public class SnakePitThread extends Thread {
     @Override
     public void run() {
         System.out.println("Starting snake pit gp engine...");
-        core.run_snakes_pit(snakePit);
-        System.out.println("Snake pit gp finished.");
-        snakePit.report("GP finished at "+(new Date()).toString()+'\n');
+        snakePit.onRunStarted("GP started at "+(new Date()).toString()+'\n');
+        try {
+            core.run_snakes_pit(snakePit);
+            System.out.println("Snake pit gp finished.");
+            snakePit.onRunFinished("GP finished at "+(new Date()).toString()+'\n');
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Snake pit gp stopped.");
+            snakePit.onRunStopped("GP stopped at "+(new Date()).toString()+'\n');
+        }
     }
 }

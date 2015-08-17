@@ -5,10 +5,12 @@
  */
 package com.github.somi92.snakepitui.dialogs;
 
+import com.github.somi92.snakepitui.interfaces.SnakePitReport;
 import com.github.somi92.snakepitui.interop.SnakePitObject;
 import com.github.somi92.snakepitui.interop.threads.SnakePitThread;
 import java.util.Date;
 import javax.swing.ButtonGroup;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -25,6 +27,7 @@ public class BreedDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         jlblStatus.setVisible(false);
+        jbtnStop.setEnabled(false);
         ButtonGroup bg = new ButtonGroup();
         bg.add(jrbtnFull);
         bg.add(jrbtnInitial);
@@ -66,6 +69,7 @@ public class BreedDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtxtResults = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jbtnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Breed snakes");
@@ -92,7 +96,7 @@ public class BreedDialog extends javax.swing.JDialog {
 
         jtxtMigrations.setColumns(10);
         jtxtMigrations.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jtxtMigrations.setText("2");
+        jtxtMigrations.setText("5");
 
         jtxtIslands.setColumns(10);
         jtxtIslands.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -278,6 +282,13 @@ public class BreedDialog extends javax.swing.JDialog {
 
         jButton1.setText("Save to a text file");
 
+        jbtnClear.setText("Clear results log");
+        jbtnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -285,9 +296,10 @@ public class BreedDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbtnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -297,7 +309,9 @@ public class BreedDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jbtnClear))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -354,32 +368,23 @@ public class BreedDialog extends javax.swing.JDialog {
         spo.setMax_depth(dep);
         spo.setMutation_probability(mut);
         spo.setFunctions(functions);
-        spo.setTxtArea(jtxtResults);
+        spo.setParent(this);
         
         spt = new SnakePitThread(spo);
-        jtxtResults.append("GP started at "+(new Date()).toString()+'\n');
         spt.start();
-        
-        jlblStatus.setVisible(true);
-        jlblMessage.setText("GP is running...");
-        jbtnRun.setEnabled(false);
-        jbtnStop.setEnabled(true);
     }//GEN-LAST:event_jbtnRunActionPerformed
 
     private void jbtnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStopActionPerformed
-        jlblStatus.setVisible(false);
-        jlblMessage.setText("GP is stopped.");
-        jtxtResults.append("========================================="+'\n'+'\n');
-        jtxtResults.append("GP stopped at "+(new Date()).toString()+'\n');
-        jbtnRun.setEnabled(true);
-        jbtnStop.setEnabled(false);
-        
         spt.interrupt();
     }//GEN-LAST:event_jbtnStopActionPerformed
 
     private void jtxtTournamentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTournamentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtTournamentActionPerformed
+
+    private void jbtnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnClearActionPerformed
+        jtxtResults.setText("");
+    }//GEN-LAST:event_jbtnClearActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -395,6 +400,7 @@ public class BreedDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtnClear;
     private javax.swing.JButton jbtnRun;
     private javax.swing.JButton jbtnStop;
     private javax.swing.JLabel jlblMessage;
@@ -410,4 +416,31 @@ public class BreedDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea jtxtResults;
     private javax.swing.JTextField jtxtTournament;
     // End of variables declaration//GEN-END:variables
+
+    
+    public void appendResults(String message) {
+        jtxtResults.append(message);
+        jtxtResults.setCaretPosition(jtxtResults.getText().length());
+    }
+    
+    public void gpStarted() {
+        jlblStatus.setVisible(true);
+        jlblMessage.setText("GP is running...");
+        jbtnRun.setEnabled(false);
+        jbtnStop.setEnabled(true);
+    }
+    
+    public void gpStopped() {
+        jlblStatus.setVisible(false);
+        jlblMessage.setText("GP is stopped.");
+        jbtnRun.setEnabled(true);
+        jbtnStop.setEnabled(false);
+    }
+    
+    public void gpFinished() {
+        jlblStatus.setVisible(false);
+        jlblMessage.setText("GP is finished.");
+        jbtnRun.setEnabled(true);
+        jbtnStop.setEnabled(false);
+    }
 }
