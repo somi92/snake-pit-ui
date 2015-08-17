@@ -5,6 +5,7 @@
  */
 package com.github.somi92.snakepitui.menu;
 
+import com.github.somi92.snakepitui.dialogs.BreedDialog;
 import com.github.somi92.snakepitui.dialogs.LoadRunDialog;
 import com.github.somi92.snakepitui.dialogs.ManualDialog;
 
@@ -80,6 +81,11 @@ public class MainMenu extends javax.swing.JFrame {
         jbtnRunGP.setFont(new java.awt.Font("DejaVu Sans", 3, 18)); // NOI18N
         jbtnRunGP.setText("Breed snakes");
         jbtnRunGP.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnRunGP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnRunGPActionPerformed(evt);
+            }
+        });
 
         jbtnAbout.setFont(new java.awt.Font("DejaVu Sans", 3, 18)); // NOI18N
         jbtnAbout.setText("About");
@@ -169,6 +175,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void jbtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAutoActionPerformed
         new LoadRunDialog(this, true).setVisible(true);
     }//GEN-LAST:event_jbtnAutoActionPerformed
+
+    private void jbtnRunGPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRunGPActionPerformed
+        new BreedDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_jbtnRunGPActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
