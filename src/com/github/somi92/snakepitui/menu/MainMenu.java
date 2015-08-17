@@ -8,6 +8,8 @@ package com.github.somi92.snakepitui.menu;
 import com.github.somi92.snakepitui.dialogs.BreedDialog;
 import com.github.somi92.snakepitui.dialogs.LoadRunDialog;
 import com.github.somi92.snakepitui.dialogs.ManualDialog;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -177,7 +179,30 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnAutoActionPerformed
 
     private void jbtnRunGPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRunGPActionPerformed
-        new BreedDialog(this, true).setVisible(true);
+        BreedDialog bd = new BreedDialog(this, true);
+        bd.setVisible(true);
+        bd.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.out.println("windowClosing");
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                System.out.println("windowClosed");
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                super.windowDeactivated(e);
+                System.out.println("windowDeactivated");
+                bd.exit();
+            }
+            
+        });
     }//GEN-LAST:event_jbtnRunGPActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

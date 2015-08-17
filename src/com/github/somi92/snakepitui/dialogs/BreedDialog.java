@@ -5,14 +5,24 @@
  */
 package com.github.somi92.snakepitui.dialogs;
 
-import com.github.somi92.snakepitui.interfaces.SnakePitReport;
 import com.github.somi92.snakepitui.interop.SnakePitObject;
 import com.github.somi92.snakepitui.interop.threads.SnakePitThread;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -69,7 +79,7 @@ public class BreedDialog extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtxtResults = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        jbtnSave = new javax.swing.JButton();
         jbtnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -278,7 +288,12 @@ public class BreedDialog extends javax.swing.JDialog {
         jtxtResults.setRows(5);
         jScrollPane1.setViewportView(jtxtResults);
 
-        jButton1.setText("Save to a text file");
+        jbtnSave.setText("Save to a text file");
+        jbtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSaveActionPerformed(evt);
+            }
+        });
 
         jbtnClear.setText("Clear results log");
         jbtnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +313,7 @@ public class BreedDialog extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jbtnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jbtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -308,7 +323,7 @@ public class BreedDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jbtnSave)
                     .addComponent(jbtnClear))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
@@ -396,8 +411,44 @@ public class BreedDialog extends javax.swing.JDialog {
         jtxtResults.setText("");
     }//GEN-LAST:event_jbtnClearActionPerformed
 
+    private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
+        JFileChooser fc = new JFileChooser();
+//        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt", "text");
+        fc.setFileFilter(filter);
+        int retVal = fc.showSaveDialog(this);
+        if(retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            String text = "File saved at "+(new Date()).toString()+'\n';
+            text += getParamsString();
+            text += jtxtResults.getText();
+            if(text == null) {
+                text = "";
+            }
+            saveToFile(text, file);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error in file chooser!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbtnSaveActionPerformed
+    
+    private void saveToFile(String text, File file) {
+        try {
+            String path = file.getCanonicalPath();
+            if(!path.endsWith(".txt")) {
+                path += ".txt";
+            }
+            BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+            bw.write(text);
+            bw.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Cannot save, file not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Cannot save, I/O error detected!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -411,6 +462,7 @@ public class BreedDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnClear;
     private javax.swing.JButton jbtnRun;
+    private javax.swing.JButton jbtnSave;
     private javax.swing.JButton jbtnStop;
     private javax.swing.JLabel jlblMessage;
     private javax.swing.JLabel jlblStatus;
@@ -437,6 +489,16 @@ public class BreedDialog extends javax.swing.JDialog {
         jlblMessage.setText("GP is running...");
         jbtnRun.setEnabled(false);
         jbtnStop.setEnabled(true);
+        
+        jtxtDepth.setEnabled(false);
+        jtxtIslands.setEnabled(false);
+        jtxtIterations.setEnabled(false);
+        jtxtMigrations.setEnabled(false);
+        jtxtMutations.setEnabled(false);
+        jtxtPopulation.setEnabled(false);
+        jtxtTournament.setEnabled(false);
+        jrbtnFull.setEnabled(false);
+        jrbtnInitial.setEnabled(false);
     }
     
     public void gpStopped() {
@@ -444,6 +506,16 @@ public class BreedDialog extends javax.swing.JDialog {
         jlblMessage.setText("GP is stopped.");
         jbtnRun.setEnabled(true);
         jbtnStop.setEnabled(false);
+        
+        jtxtDepth.setEnabled(true);
+        jtxtIslands.setEnabled(true);
+        jtxtIterations.setEnabled(true);
+        jtxtMigrations.setEnabled(true);
+        jtxtMutations.setEnabled(true);
+        jtxtPopulation.setEnabled(true);
+        jtxtTournament.setEnabled(true);
+        jrbtnFull.setEnabled(true);
+        jrbtnInitial.setEnabled(true);
     }
     
     public void gpFinished() {
@@ -451,6 +523,16 @@ public class BreedDialog extends javax.swing.JDialog {
         jlblMessage.setText("GP is finished.");
         jbtnRun.setEnabled(true);
         jbtnStop.setEnabled(false);
+        
+        jtxtDepth.setEnabled(true);
+        jtxtIslands.setEnabled(true);
+        jtxtIterations.setEnabled(true);
+        jtxtMigrations.setEnabled(true);
+        jtxtMutations.setEnabled(true);
+        jtxtPopulation.setEnabled(true);
+        jtxtTournament.setEnabled(true);
+        jrbtnFull.setEnabled(true);
+        jrbtnInitial.setEnabled(true);
     }
     
     public boolean validateParams(int itr, int mig, int isl, int tou, int pop, int dep, double mut) {
@@ -467,5 +549,42 @@ public class BreedDialog extends javax.swing.JDialog {
             return false;
         }
         return true;
+    }
+    
+    public String getParamsString() {
+        int itr = Integer.parseInt(jtxtIterations.getText().trim());
+        int mig = Integer.parseInt(jtxtMigrations.getText().trim());
+        int isl = Integer.parseInt(jtxtIslands.getText().trim());
+        int tou = Integer.parseInt(jtxtTournament.getText().trim());
+        int pop = Integer.parseInt(jtxtPopulation.getText().trim());
+        int dep = Integer.parseInt(jtxtDepth.getText().trim());
+        double mut = Double.parseDouble(jtxtMutations.getText().trim());
+        
+        String functions = "";
+        if(jrbtnFull.isSelected()) {
+            functions = "full";
+        } else if(jrbtnInitial.isSelected()) {
+            functions = "initial";
+        }
+        
+        String s = "========================================="+'\n'+
+                "GP parameters"+'\n'+'\n'+
+                "Iterations: "+itr+'\n'+
+                "Migrations: "+mig+'\n'+
+                "Number of islands: "+isl+'\n'+
+                "Tournament size: "+tou+'\n'+
+                "Population size: "+pop+'\n'+
+                "Maximum depth: "+dep+'\n'+
+                "Mutation probability: "+mut+'\n'+
+                "Function set: "+functions+'\n'+
+                "========================================="+'\n';
+        
+        return s;
+    }
+    
+    public void exit() {
+        if(spt != null) {
+            spt.interrupt();
+        }
     }
 }
