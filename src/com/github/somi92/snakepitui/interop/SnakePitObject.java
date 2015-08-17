@@ -96,6 +96,7 @@ public class SnakePitObject {
     }
     
     public void report(String res) {
+        txtArea.append("========================================="+'\n'+'\n');
         txtArea.append(res+'\n');
     }
 }

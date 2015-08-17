@@ -7,6 +7,7 @@ package com.github.somi92.snakepitui.dialogs;
 
 import com.github.somi92.snakepitui.interop.SnakePitObject;
 import com.github.somi92.snakepitui.interop.threads.SnakePitThread;
+import java.util.Date;
 import javax.swing.ButtonGroup;
 
 /**
@@ -15,6 +16,8 @@ import javax.swing.ButtonGroup;
  */
 public class BreedDialog extends javax.swing.JDialog {
 
+    private SnakePitThread spt;
+    
     /**
      * Creates new form BreedDialog
      */
@@ -268,6 +271,7 @@ public class BreedDialog extends javax.swing.JDialog {
 
         jtxtResults.setEditable(false);
         jtxtResults.setColumns(20);
+        jtxtResults.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jtxtResults.setLineWrap(true);
         jtxtResults.setRows(5);
         jScrollPane1.setViewportView(jtxtResults);
@@ -352,16 +356,25 @@ public class BreedDialog extends javax.swing.JDialog {
         spo.setFunctions(functions);
         spo.setTxtArea(jtxtResults);
         
-        SnakePitThread spt = new SnakePitThread(spo);
+        spt = new SnakePitThread(spo);
+        jtxtResults.append("GP started at "+(new Date()).toString()+'\n');
         spt.start();
         
         jlblStatus.setVisible(true);
         jlblMessage.setText("GP is running...");
+        jbtnRun.setEnabled(false);
+        jbtnStop.setEnabled(true);
     }//GEN-LAST:event_jbtnRunActionPerformed
 
     private void jbtnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStopActionPerformed
         jlblStatus.setVisible(false);
         jlblMessage.setText("GP is stopped.");
+        jtxtResults.append("========================================="+'\n'+'\n');
+        jtxtResults.append("GP stopped at "+(new Date()).toString()+'\n');
+        jbtnRun.setEnabled(true);
+        jbtnStop.setEnabled(false);
+        
+        spt.interrupt();
     }//GEN-LAST:event_jbtnStopActionPerformed
 
     private void jtxtTournamentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTournamentActionPerformed

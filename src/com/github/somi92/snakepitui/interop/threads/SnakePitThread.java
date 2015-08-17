@@ -5,9 +5,8 @@
  */
 package com.github.somi92.snakepitui.interop.threads;
 
-import clojure.java.api.Clojure;
-import clojure.lang.IFn;
 import com.github.somi92.snakepitui.interop.SnakePitObject;
+import java.util.Date;
 import snake_pit.core;
 
 /**
@@ -29,8 +28,7 @@ public class SnakePitThread extends Thread {
     public void run() {
         System.out.println("Starting snake pit gp engine...");
         core.run_snakes_pit(snakePit);
-//        IFn run_snake_pit = Clojure.var("snake-pit.core", "-run_snakes_pit");
-//        run_snake_pit.invoke(snakePit);
         System.out.println("Snake pit gp finished.");
+        snakePit.report("GP finished at "+(new Date()).toString()+'\n');
     }
 }
