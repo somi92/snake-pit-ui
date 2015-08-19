@@ -10,6 +10,14 @@ It presents a convenient interface that enables the user to experiment with GP p
 
 ## Installation and usage
 
+You must have Java installed on your machine. Download the SnakePitUI.zip file that can be found in the releases section of this respository and unpack it on your machine. Enter the SnakePitUI folder and run the following command from command line:
+
+```
+java -jar SnakePitUI.jar
+```
+
+The lib folder contains the snake-pit and clojure-snake projects and you shoudn't relocate it.
+
 ## Options
 
 * Manual play
