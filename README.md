@@ -34,6 +34,7 @@ The lib folder contains the snake-pit and clojure-snake projects and you shoudn'
 If you have some comments, suggestions or noticed some bugs and problems feel free to contact me and contribute.
 
 Developed by Milos Stojanovic 
+
 email: stojanovicmilos31@gmail.com
 
 ## License
