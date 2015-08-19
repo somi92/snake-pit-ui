@@ -5,6 +5,7 @@
  */
 package com.github.somi92.snakepitui.menu;
 
+import com.github.somi92.snakepitui.dialogs.AboutDialog;
 import com.github.somi92.snakepitui.dialogs.BreedDialog;
 import com.github.somi92.snakepitui.dialogs.LoadRunDialog;
 import com.github.somi92.snakepitui.dialogs.ManualDialog;
@@ -92,6 +93,11 @@ public class MainMenu extends javax.swing.JFrame {
         jbtnAbout.setFont(new java.awt.Font("DejaVu Sans", 3, 18)); // NOI18N
         jbtnAbout.setText("About");
         jbtnAbout.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAboutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -204,6 +210,10 @@ public class MainMenu extends javax.swing.JFrame {
             
         });
     }//GEN-LAST:event_jbtnRunGPActionPerformed
+
+    private void jbtnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAboutActionPerformed
+        new AboutDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_jbtnAboutActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
