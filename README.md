@@ -6,7 +6,7 @@ snake-pit-ui is a project written in Java and Swing that serves as a GUI for bot
 
 [clojure-snake](https://github.com/somi92/clojure-snake) is a simple implementation of the snake game written in Clojure and Swing. It also has the ability to use the AI output of the snake-pit project.
 
-It presents a convenient interface that enables the user to experiment with GP parameters and evolve the AI, run and display the AI in action, as well as starting manual play of the game.
+This project presents a convenient interface that enables the user to experiment with GP parameters and evolve the AI, run and display the AI in action, as well as starting manual play of the game.
 
 ## Installation and usage
 
