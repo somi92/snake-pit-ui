@@ -20,22 +20,22 @@ The lib folder contains the snake-pit and clojure-snake projects and you shoudn'
 
 ## Options
 
-![Snake pit menu](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/menu.png "Snake pit menu")
+![Snake pit menu](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/menu.png?raw=true "Snake pit menu")
 
 Manual play
   - Starts the clojure-snake in manual mode with the ability to set the speed of the game.
   
-  ![Playing](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/snake2.png "Playing")
+  ![Playing](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/snake2.png?raw=true "Playing")
 
 Load and run snake AI
   - Presents an interface for loading the AI (control routine) produced by snake-pit and calls the clojure-snake to display the AI in action. Use ctrl-V to paste the control routine or enter it manually. The user can also load a hardcoded demo AI with a click of a button. To see how a valid control routine looks like please refer to documentation of the [snake-pit](https://github.com/somi92/snake-pit) project.
   
-  ![Load snake AI](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/loadai.png "Load snake AI")
+  ![Load snake AI](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/loadai.png?raw=true "Load snake AI")
 
 Breed snakes
   - Presents an interface for working with snake-pit library. The user can set GP parameters and run the GP engine. The GP reports back the result and the status of the run. Results can be saved to a text file along with the parameters of the associated run. For description of the available GP parameters please refer to documentation of the [snake-pit](https://github.com/somi92/snake-pit) project.
   
-  ![Breed snake](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/gp.png "Breed snake")
+  ![Breed snake](https://raw.githubusercontent.com/somi92/snake-pit-ui/master/img/gp.png?raw=true "Breed snake")
 
 About
   - Presents information about the project.
